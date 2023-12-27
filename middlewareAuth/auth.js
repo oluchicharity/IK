@@ -28,4 +28,15 @@ const auth= async(req,res,next)=>{
    
 }
 
-module.exports=auth
+const Admins = (req,res,next)=>{
+    
+    auth(req,res,async ()=>{
+        if(req.user.isAdmin){
+            next() 
+        }else{
+            return res.status(401).json({message:`user not authorized`})
+        }
+    })
+}
+
+module.exports={auth,Admins}
